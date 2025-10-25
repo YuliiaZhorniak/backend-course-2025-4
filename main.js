@@ -7,3 +7,7 @@ program
 
 program.parse(process.argv);
 const options = program.opts();
+if (!fs.existsSync(inputPath)) {
+  console.error('Cannot find input file');
+  process.exit(1);
+}
