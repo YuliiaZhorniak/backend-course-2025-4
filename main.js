@@ -18,9 +18,19 @@ if (!fs.existsSync(inputPath)) {
   console.error('Cannot find input file');
   process.exit(1);
 }
-const server = http.createServer((req, res) => {
-  res.writeHead(200, {'Content-Type': 'text/plain; charset=utf-8'});
+const server = http.createServer(async (req, res) => {
+try {
+   const  raw = await fs.promises.readFile(inputPath, 'utf8');
+   const data = JSON.parse(raw);
+    await fs.promises.writeFile('output.json', JSON.stringify(data, null, 2), 'utf8');
+     res.writeHead(200, {'Content-Type': 'text/plain; charset=utf-8'});
   res.end('Server is running');
+
+    }catch (err) {
+    console.error('Server error:', err);
+    res.writeHead(500, {'Content-Type': 'text/plain; charset=utf-8'});
+   }
+  
 });
 
 server.listen(port, host, () => {
