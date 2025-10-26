@@ -28,11 +28,20 @@ try {
     const humidityFlag = qs.get('humidity') === 'true';
     const minRainParam = qs.get('min_rainfall');
     const minRain = minRainParam ? parseFloat(minRainParam) : null;
-      const output = records.map(r => ({
-        rainfall: r.Rainfall ?? r.rainfall ?? r.rain ?? 0,
-        pressure3pm: r.Pressure3pm ?? r.pressure3pm ?? r.pressure ?? '',
-        humidity: r.Humidity3pm ?? r.humidity3pm ?? r.humidity ?? ''
+   
+const filtered = records.filter(r => {
+  if (minRain === null) return true;
+  const rainVal = r.Rainfall ?? r.rainfall ?? r.rain ?? 0;
+  return parseFloat(rainVal) > minRain;
+});
+
+
+const output = filtered.map(r => ({
+  rainfall: r.Rainfall ?? r.rainfall ?? r.rain ?? 0,
+  pressure3pm: r.Pressure3pm ?? r.pressure3pm ?? r.pressure ?? '',
+  humidity: humidityFlag ? (r.Humidity3pm ?? r.humidity3pm ?? r.humidity ?? '') : undefined
 }));
+
 
 const builder = new XMLBuilder({ format: true, indentBy: "  " });
 const xml = builder.build({ weather_data: { record: output } });
