@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-   "start": "node main.js -i weather.json -h 127.0.0.1 -p 3000",
+    "start": "node main.js -i weather.json -h 127.0.0.1 -p 3000",
     "dev": "nodemon --watch . --ext js,json --exec \"node main.js -i weather.json -h 127.0.0.1 -p 3000\"",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -12,7 +12,8 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "commander": "^14.0.2"
+    "commander": "^14.0.2",
+    "fast-xml-parser": "^4.5.3"
   },
   "devDependencies": {
     "nodemon": "^3.1.10"
