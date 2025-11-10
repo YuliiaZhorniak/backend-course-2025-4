@@ -20,6 +20,11 @@ if (!fs.existsSync(inputPath)) {
 }
 const server = http.createServer(async (req, res) => {
 try {
+       if (req.method !== 'GET') {
+    res.writeHead(405, { 'Content-Type': 'text/plain; charset=utf-8' });
+    res.end('Помилка');
+    return;
+  }
    const  raw = await fs.promises.readFile(inputPath, 'utf8');
    const data = JSON.parse(raw);
    const records = Array.isArray(data) ? data : [];
